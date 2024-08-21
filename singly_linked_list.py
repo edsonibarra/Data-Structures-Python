@@ -1,3 +1,6 @@
+from typing import Any
+
+
 class Node:
     def __init__(self, data):
         self.data = data
@@ -103,7 +106,7 @@ class SinglyLinkedList:
         deleting nodes in place, aka
         while it's iterating over
         the linked list.
-        
+
         In difference to the delete_by_value
         and delete_by_position methods where
         the iteration stops when finds the
@@ -122,6 +125,15 @@ class SinglyLinkedList:
                 seen[cur_node.data] = True
                 prev = cur_node
             cur_node = prev.next
+    
+    def count_occurrences(self, data: Any) -> int:
+        count = 0
+        cur_node = self.head
+        while cur_node:
+            if cur_node.data == data:
+                count += 1
+            cur_node = cur_node.next
+        return count
             
 
 
