@@ -1,4 +1,11 @@
 from typing import Any
+from enum import Enum
+
+
+class BTPrintType(Enum):
+    PRE_ORDER = 1
+    IN_ORDER = 2
+    POST_ORDER = 3
 
 
 # Implementation of a binary tree node
@@ -17,14 +24,14 @@ class BinaryTree:
     def __init__(self, root: Any):
         self.root = Node(root)
 
-    def preorder_print(self, start: Node, traversal: str):
+    def pre_order_print(self, start: Node, traversal: str):
         """
         Root->Left->Right
         """
         if start:
             traversal += str(start.value) + "-"
-            traversal = self.preorder_print(start.left, traversal)
-            traversal = self.preorder_print(start.right, traversal)
+            traversal = self.pre_order_print(start.left, traversal)
+            traversal = self.pre_order_print(start.right, traversal)
         return traversal
 
     def in_order_print(self, start: Node, traversal: str) -> str:
@@ -65,6 +72,15 @@ class BinaryTree:
             traversal += str(start.value) + "-"
         return traversal
 
+    def print_tree(self, traversal_type: BTPrintType = BTPrintType.PRE_ORDER) -> str:
+        if traversal_type == BTPrintType.PRE_ORDER:
+            return self.pre_order_print(self.root, "")
+        elif traversal_type == BTPrintType.IN_ORDER:
+            return self.in_order_print(self.root, "")
+        elif traversal_type == BTPrintType.POST_ORDER:
+            return self.post_order_print(self.root, "")
+
+
 
 # Add nodes to the Binary Tree
 def main():
@@ -76,8 +92,31 @@ def main():
     tree.root.right.left = Node(6)
     tree.root.right.right = Node(7)
 
-    print(tree.preorder_print(tree.root, ""))
+    print("Pre-Order Traversal")
+    print(tree.print_tree(BTPrintType.PRE_ORDER))
+    print("In-Order Traversal")
+    print(tree.print_tree(BTPrintType.IN_ORDER))
+    print("Post-Order Traversal")
+    print(tree.print_tree(BTPrintType.POST_ORDER))
 
+    print("\n\nUsing Educative example binary tree\n\n")
+
+    tree = BinaryTree("F")
+    tree.root.left = Node("B")
+    tree.root.right = Node("G")
+    tree.root.left.left = Node("A")
+    tree.root.left.right = Node("D")
+    tree.root.left.right.left = Node("C")
+    tree.root.left.right.right = Node("E")
+    tree.root.right.right = Node("I")
+    tree.root.right.right.left = Node("H")
+
+    print("Pre-Order Traversal")
+    print(tree.print_tree(BTPrintType.PRE_ORDER))
+    print("In-Order Traversal")
+    print(tree.print_tree(BTPrintType.IN_ORDER))
+    print("Post-Order Traversal")
+    print(tree.print_tree(BTPrintType.POST_ORDER))
 
 if __name__ == "__main__":
     main()
